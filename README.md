@@ -1,0 +1,2 @@
+# FileExplore
+Manage assembly version
