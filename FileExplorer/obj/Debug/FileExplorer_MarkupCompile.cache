@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer\App.xaml
-9-147929541
+10-191125894
 
-29-553606512
-75383377354
-Control\CommonFilter.xaml;Views\BodyView.xaml;Views\BusyIndicator.xaml;Views\MainPageView.xaml;Views\HeaderView.xaml;Views\NugetMgrView.xaml;Views\ProjectMgrView.xaml;Views\ReferenceAssMgrView.xaml;Views\ShellView.xaml;
+35-1088041002
+82116529910
+Control\CommonFilter.xaml;Views\BodyView.xaml;Views\BusyIndicator.xaml;Views\MainPageView.xaml;Views\HeaderView.xaml;Views\NugetMgrView.xaml;Views\ProjectMgrView.xaml;Views\ReferenceAssMgrView.xaml;Views\SimpleDialog.xaml;Views\ShellView.xaml;
 
 False
 

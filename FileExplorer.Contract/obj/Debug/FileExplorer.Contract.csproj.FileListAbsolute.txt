@@ -9,7 +9,9 @@ D:\Working\FileExplorer\FileExplorer\FileExplorer.Contract\obj\Debug\FileExplore
 D:\Working\FileExplorer\FileExplorer\FileExplorer.Contract\obj\Debug\FileExplorer.Contract.pdb
 D:\Working\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\FileExplorer.Contract.pdb
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\FileExplorer.Contract.dll
-D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\FileExplorer.Contract.pdb
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\log4net.dll
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\log4net.xml
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\obj\Debug\FileExplorer.Contract.csprojResolveAssemblyReference.cache
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\obj\Debug\FileExplorer.Contract.dll
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\obj\Debug\FileExplorer.Contract.pdb
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer.Contract\bin\Debug\FileExplorer.Contract.pdb

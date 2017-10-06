@@ -11,16 +11,21 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows.Forms;
     using PropertyChanged;
     using VSProjectManagement.Helper;
 
     /// <summary>
     /// Class ContentBase.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
+    /// <typeparam name="TDataContext">The type of the t data context.</typeparam>
+    /// <seealso cref="FileExplorer.ViewModels.ValidatingScreen{TViewModel}" />
     /// <seealso cref="Caliburn.Micro.Screen" />
     [AddINotifyPropertyChangedInterface]
-    public abstract class ContentBase<T> : Screen where T : ICheckedNode
+    public abstract class ContentBase<TViewModel, TDataContext> : ValidatingScreen<TViewModel> 
+        where TDataContext : ICheckedNode 
+        where TViewModel : ValidatingScreen<TViewModel>
     {
         /// <summary>
         /// The is selected all
@@ -36,7 +41,7 @@
         /// Gets or sets the origin items.
         /// </summary>
         /// <value>The origin items.</value>
-        public IList<T> OriginItems { get; set; } = new List<T>();
+        public IList<TDataContext> OriginItems { get; set; } = new List<TDataContext>();
 
         /// <summary>
         /// Gets or sets the search setting.
@@ -50,7 +55,7 @@
         /// Gets or sets the folders.
         /// </summary>
         /// <value>The folders.</value>
-        public ObservableCollection<T> Items { get; set; } = new ObservableCollection<T>();
+        public ObservableCollection<TDataContext> Items { get; set; } = new ObservableCollection<TDataContext>();
 
         /// <summary>
         /// Sets a value indicating whether this instance is all items selected.
@@ -69,24 +74,14 @@
             get { return this.isSelectedAll; }
         }
 
-        
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentBase{T}"/> class.
         /// </summary>
-        public ContentBase()
+        protected ContentBase()
         {
             this.IsAllItemsSelected = false;
             this.SearchSetting = this.headerBase.SearchSetting;
             this.headerBase.SearchTextChangedEvent += this.OnSearchTextChangedEvent;
-        }
-
-        /// <summary>
-        /// Called when activating.
-        /// </summary>
-        protected override void OnActivate()
-        {
-            base.OnActivate();
         }
 
         /// <summary>
@@ -130,18 +125,23 @@
                     }
                 });
             }
-            }
+        }
 
         /// <summary>
         /// Scans this instance.
         /// </summary>
         public async void Scan()
         {
+            if (this.Validate())
+            {
+                return;
+            }
+
             // Show BusyIndicator
             var busyView = new BusyIndicator();
             await DialogHost.Show(busyView, "RootDialog", (sender, args) =>
             {
-                Task.Run<IList<T>>(() =>
+                Task.Run<IList<TDataContext>>(() =>
                 {
                     if (!Directory.Exists(this.SearchSetting.RootDir))
                     {
@@ -153,7 +153,7 @@
                     this.IsAllItemsSelected = false; // Uncheck selected all
                     var items = this.HandleScanning();
                     this.OriginItems = items;
-                    
+
                     // Filter items
                     return this.FilterItemsByText(this.headerBase.FilterText);
                 }).ContinueWith(tks =>
@@ -180,15 +180,23 @@
         /// </summary>
         public async void IncreaseVersion()
         {
+            if (this.Validate())
+            {
+                return;
+            }
+
+            var selectedItems = this.GetSelectedItems();
+            if (!selectedItems.Any())
+            {
+                await this.ShowDialog("RootDialog", "Please selected item(s)");
+                return;
+            }
+
             // Show BusyIndicator
             var busyView = new BusyIndicator();
             await DialogHost.Show(busyView, "RootDialog", (sender, args) =>
             {
-                Task.Run<bool>(() =>
-                {
-                    var selectedItems = this.GetSelectedItems();
-                    return this.HandleIncreaseVersion(selectedItems);
-                }).ContinueWith(tks =>
+                Task.Run<bool>(() => this.HandleIncreaseVersion(selectedItems)).ContinueWith(tks =>
                 {
                     Execute.OnUIThreadAsync(() =>
                     {
@@ -199,20 +207,38 @@
         }
 
         /// <summary>
+        /// Directories the browser.
+        /// </summary>
+        public void DirectoryBrowser()
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.Description = @"Direct to Implementation folder of Project";
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    this.SearchSetting.RootDir = dialog.SelectedPath; ;
+                    this.NotifyOfPropertyChange("RootDir");
+                }
+            }
+        }
+
+        /// <summary>
         /// Scans this instance.
         /// </summary>
-        public abstract IList<T> HandleScanning();
+        public abstract IList<TDataContext> HandleScanning();
 
         /// <summary>
         /// Increases the version.
         /// </summary>
-        public abstract bool HandleIncreaseVersion(IList<T> selectedItems);
+        public abstract bool HandleIncreaseVersion(IList<TDataContext> selectedItems);
 
         /// <summary>
         /// Filters the items by text.
         /// </summary>
-        /// <returns>ObservableCollection&lt;T&gt;.</returns>
-        protected abstract IList<T> FilterItemsByText(string text);
+        /// <param name="text">The text.</param>
+        /// <returns>IList&lt;TDataContext&gt;.</returns>
+        protected abstract IList<TDataContext> FilterItemsByText(string text);
 
         /// <summary>
         /// Checked all.
@@ -230,7 +256,7 @@
         /// Gets the selected projects.
         /// </summary>
         /// <returns></returns>
-        protected IList<T> GetSelectedItems()
+        protected IList<TDataContext> GetSelectedItems()
         {
             return this.Items.Where(pr => pr.IsChecked != false).ToList();
         }
@@ -253,7 +279,7 @@
         /// Adds the project.
         /// </summary>
         /// <param name="item">The project.</param>
-        protected void AddItem(T item)
+        protected void AddItem(TDataContext item)
         {
             this.Items.Add(item);
         }
@@ -261,7 +287,7 @@
         /// <summary>
         /// Needs the reload data.
         /// </summary>
-        protected virtual bool IsChangeData(IList<T> filteringItems)
+        protected virtual bool IsChangeData(IList<TDataContext> filteringItems)
         {
             // Diff number of element
             if (filteringItems.Count != this.Items.Count)
@@ -277,6 +303,22 @@
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Shows the dialog.
+        /// </summary>
+        /// <param name="mainScreen">The main screen.</param>
+        /// <param name="message">The message.</param>
+        /// <returns>Task.</returns>
+        public async Task ShowDialog(string mainScreen, string message)
+        {
+            var dialogView = new SimpleDialog
+            {
+                Message = {Text = message}
+            };
+            await DialogHost.Show(dialogView, mainScreen);
+            DialogHost.CloseDialogCommand.Execute(true, dialogView);
         }
     }
 }

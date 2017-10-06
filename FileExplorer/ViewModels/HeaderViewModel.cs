@@ -7,7 +7,14 @@
     using Contract;
     using Interface;
     using PropertyChanged;
+    using Validation;
+    using ILog = log4net.ILog;
+    using LogManager = log4net.LogManager;
 
+    /// <summary>
+    /// Class HeaderViewModel.
+    /// </summary>
+    /// <seealso cref="FileExplorer.Interface.IHeaderBase" />
     [Export]
     [Export(typeof(IHeaderBase))]
     [PartCreationPolicy(CreationPolicy.Shared)]
@@ -27,6 +34,11 @@
         /// </summary>
         private string filterText;
 
+        /// <summary>
+        /// The logger  
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(HeaderViewModel));
+
         #endregion
 
         #region Properties
@@ -36,6 +48,7 @@
         /// </summary>
         /// <value>The root dir.</value>
         [AlsoNotifyFor("HasText")]
+        [StringRequireValidator("Filter pattern should be not empty")]
         public string FilterText
         {
             get { return this.filterText; }
@@ -80,7 +93,9 @@
         /// </summary>
         public void ProjectMgr()
         {
+            Logger.Debug("ProjectMgr... - Show ProjectMgrViewModel");
             this.contentManagement.ShowContent(IoC.Get<ProjectMgrViewModel>());
+            Logger.Debug("ProjectMgr... - Show ProjectMgrViewModel..DONE");
         }
 
         /// <summary>
@@ -88,14 +103,18 @@
         /// </summary>
         public void NugetMgr()
         {
+            Logger.Debug("NugetMgr... - Show NugetMgrViewModel");
             this.contentManagement.ShowContent(IoC.Get<NugetMgrViewModel>());
+            Logger.Debug("NugetMgr... - Show NugetMgrViewModel..DONE");
         }
         /// <summary>
         /// References the ass MGR.
         /// </summary>
         public void ReferenceAssMgr()
         {
+            Logger.Debug("ReferenceAssMgr... - Show ReferenceAssMgrViewModel");
             this.contentManagement.ShowContent(IoC.Get<ReferenceAssMgrViewModel>());
+            Logger.Debug("ReferenceAssMgr... - Show ReferenceAssMgrViewModel..DONE");
         }
 
         /// <summary>
@@ -103,7 +122,9 @@
         /// </summary>
         public void Exit()
         {
+            Logger.Debug("Exit...");
             Application.Current.MainWindow.Close();
+            Logger.Debug("Exit...DONE");
         }
 
         #endregion

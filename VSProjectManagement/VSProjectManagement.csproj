@@ -34,6 +34,10 @@
       <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -49,6 +53,7 @@
     <Compile Include="Controller\ReferenceAssemblyController.cs" />
     <Compile Include="Controller\NugetController.cs" />
     <Compile Include="Controller\ProjectController.cs" />
+    <Compile Include="Extension\Extension.cs" />
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\VSProjectHelper.cs" />
     <Compile Include="Model\NuspecInfo.cs" />

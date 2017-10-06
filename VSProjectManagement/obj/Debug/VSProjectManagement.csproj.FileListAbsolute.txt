@@ -20,11 +20,13 @@ D:\Working\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectMana
 D:\Working\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectManagement.dll
 D:\Working\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectManagement.pdb
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\VSProjectManagement.dll
-D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\VSProjectManagement.pdb
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\Caliburn.Micro.dll
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\FileExplorer.Contract.dll
-D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\FileExplorer.Contract.pdb
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\log4net.dll
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\Caliburn.Micro.xml
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\log4net.xml
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectManagement.csprojResolveAssemblyReference.cache
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectManagement.dll
 D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\obj\Debug\VSProjectManagement.pdb
-D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\Caliburn.Micro.dll
-D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\Caliburn.Micro.xml
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\VSProjectManagement.pdb
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\VSProjectManagement\bin\Debug\FileExplorer.Contract.pdb

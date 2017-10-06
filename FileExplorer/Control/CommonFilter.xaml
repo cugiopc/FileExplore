@@ -23,15 +23,33 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <!--Root dir -->
             <TextBox materialDesign:HintAssist.Hint="Root dir"
-                     Grid.ColumnSpan="2"
-                     Text="{Binding SearchSetting.RootDir, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <!--Field-->
+                     Grid.Column="0"
+                     Text="{Binding RootDir, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="0 0 4 0"/>
+            <Button Grid.Column="1" Margin="0 0 0 -10"
+                    HorizontalAlignment="Left"
+                    ToolTip="Directory browser"
+                    Width="Auto"
+                    cal:Message.Attach="[Event Click] = [Action DirectoryBrowser();]">
+                <materialDesign:PackIcon Kind="DotsHorizontal" 
+                                         Height="24" 
+                                         Width="24" 
+                                         Foreground="White"/>
+            </Button>
+        </Grid>
+            
+            <!--Field-->
             <TextBox materialDesign:HintAssist.Hint="Filter"
-                         Grid.Row="1"
-                         Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
+                         Grid.Row="1" Grid.Column="0"
+                     Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="0 0 4 0"/>
 
             <!--Button panel-->
             <StackPanel Margin="4 12 4 2"
@@ -53,7 +71,7 @@
                 </Button>
                 <!--Increase button-->
                 <Button Margin="10 0 2 0" Width="110"
-                        cal:Message.Attach="[Event Click] = [Action IncreaseVersion()]"
+                        cal:Message.Attach="[Event Click] = [Action IncreaseVersion()];"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="ArrowUpBold"

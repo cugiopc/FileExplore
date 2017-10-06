@@ -29,13 +29,13 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox materialDesign:HintAssist.Hint="Reference Assembles"
+            <TextBox materialDesign:HintAssist.Hint="Reference Assembly"
                         Margin="8 8 8 1"
-                        Text="{Binding ReferenceAss, Mode=TwoWay}"/>
+                        Text="{Binding ReferenceAss, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox materialDesign:HintAssist.Hint="Assembly version"
                         Margin="8 8 8 1"
-                        Text="{Binding AssemblyVersion, Mode=TwoWay}"
+                        Text="{Binding AssemblyVersion, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1"/>
         </Grid>
 

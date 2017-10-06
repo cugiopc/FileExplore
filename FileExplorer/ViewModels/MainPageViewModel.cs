@@ -1,22 +1,30 @@
-﻿using Caliburn.Micro;
-using PropertyChanged;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileExplorer.ViewModels
+﻿namespace FileExplorer.ViewModels
 {
     using Contract;
-    using Interface;
+    using Caliburn.Micro;
+    using PropertyChanged;
+    using System.ComponentModel.Composition;
+    using ILog = log4net.ILog;
+    using LogManager = log4net.LogManager;
 
+    /// <summary>
+    /// Class MainPageViewModel.
+    /// </summary>
+    /// <seealso cref="Caliburn.Micro.Screen" />
     [Export]
     [AddINotifyPropertyChangedInterface]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class MainPageViewModel : Screen
     {
+        #region Varialbes
+
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(MainPageViewModel));
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -36,19 +44,20 @@ namespace FileExplorer.ViewModels
         #region CTOR
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
+        /// Initializes a new instance of the <see cref="MainPageViewModel" /> class.
         /// </summary>
         public MainPageViewModel()
         {
+            Logger.Debug("MainPageViewModel...");
             this.Header.SearchSetting = new FilterSetting
             {
                 ProjectFilter = "*.csproj",
                 NugetFilter = "*.nuspec",
-                ReferenceAssemblyFilter = "SMEE.NADAE.Core.Server, SMEE.NADAE.Core",
-                RootDir = @"d:\Working\ECACS_7\Implementation\"
+                ReferenceAssemblyFilter = "",
+                RootDir = ""
             };
-
             this.Header.ProjectMgr();
+            Logger.Debug("MainPageViewModel...DONE");
         }
 
         #endregion

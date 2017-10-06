@@ -11,8 +11,8 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowState="Normal"
-        Title="File Explorer" Height="750" Width="600"
-        WindowStartupLocation="CenterScreen" >
+        Title="Assembly Version Management" Height="750" Width="600"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignToolButton}">

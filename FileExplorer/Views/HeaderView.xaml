@@ -42,7 +42,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button cal:Message.Attach="[Event Click] = [Action NugetMgr()]">
+                        <!--<Button cal:Message.Attach="[Event Click] = [Action NugetMgr()]">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
                                             VerticalAlignment="Center">
@@ -50,7 +50,7 @@
                                     <TextBlock Text="Nuget" Margin="8 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                 </StackPanel>
                             </Button.Content>
-                        </Button>
+                        </Button>-->
                         <Button cal:Message.Attach="[Event Click] = [Action ReferenceAssMgr()]">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"

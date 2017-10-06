@@ -26,16 +26,24 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TreeView.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
 
-        
-        <ResourceDictionary>
+                <ResourceDictionary>
                 <Style x:Key="CustomMaterialDesignTreeViewItem" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MaterialDesignTreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"/>
                         <Setter Property="Margin" Value="0"/>
                     <Setter Property="Padding" Value="4"/>
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
-
-            </ResourceDictionary>
+                    
+                <Style x:Key="ValidationTextboxStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                    <Setter Property="materialDesign:HintAssist.IsFloating" Value="True"/>
+                    <Setter Property="Margin" Value="4"/>
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                </Style>
+                </ResourceDictionary>
        </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Working\FileExplorer\FileExplorer\FileExplorer\obj\Debug\
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer\obj\Debug\
 FileExplorer
 none
 false
 DEBUG;TRACE
-D:\Working\FileExplorer\FileExplorer\FileExplorer\App.xaml
-9-147929541
+D:\Working\AssemblyVersionManager\FileExplorer\FileExplorer\FileExplorer\App.xaml
+10-191125894
 
-33-1124582678
-751839571618
-Control\CommonFilter.xaml;Views\BodyView.xaml;Views\BusyIndicator.xaml;Views\MainPageView.xaml;Views\HeaderView.xaml;Views\NugetMgrView.xaml;Views\ProjectMgrView.xaml;Views\ReferenceAssMgrView.xaml;Views\ShellView.xaml;
+39173743724
+82116529910
+Control\CommonFilter.xaml;Views\BodyView.xaml;Views\BusyIndicator.xaml;Views\MainPageView.xaml;Views\HeaderView.xaml;Views\NugetMgrView.xaml;Views\ProjectMgrView.xaml;Views\ReferenceAssMgrView.xaml;Views\SimpleDialog.xaml;Views\ShellView.xaml;
 
-True
+False
 

@@ -9,7 +9,10 @@
     using VSProjectManagement.Controller;
     using VSProjectManagement.Model;
     using System.Collections.Generic;
+    using Validation;
     using VSProjectManagement.Helper;
+    using ILog = log4net.ILog;
+    using LogManager = log4net.LogManager;
 
     /// <summary>
     /// Class ReferenceAssMgrViewModel.
@@ -18,8 +21,16 @@
     [Export]
     [AddINotifyPropertyChangedInterface]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class ReferenceAssMgrViewModel : ContentBase<Project>
+    public class ReferenceAssMgrViewModel : ContentBase<ReferenceAssMgrViewModel, Project>
     {
+        #region Variables
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ReferenceAssMgrViewModel));
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -28,9 +39,20 @@
         private readonly ReferenceAssemblyController referenceAssemblyController = IoC.Get<ReferenceAssemblyController>();
 
         /// <summary>
+        /// Gets or sets the root dir.
+        /// </summary>
+        /// <value>The root dir.</value>
+        [StringRequireValidatorAttribute("Root directory should be not empty")]
+        public string RootDir {
+            get { return this.SearchSetting.RootDir; }
+            set { this.SearchSetting.RootDir = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the filter.
         /// </summary>
         /// <value>The filter.</value>
+        [StringRequireValidatorAttribute("Filter pattern should be not empty")]
         public string Filter
         {
             get { return this.SearchSetting.ProjectFilter; }
@@ -41,18 +63,24 @@
         /// Gets or sets the reference ass.
         /// </summary>
         /// <value>The reference ass.</value>
+        [StringRequireValidatorAttribute("Assembly name should be not empty")]
         public string ReferenceAss
         {
             get { return this.SearchSetting.ReferenceAssemblyFilter; }
-            set { this.SearchSetting.ReferenceAssemblyFilter = value; }
+            set
+            {
+                this.SearchSetting.ReferenceAssemblyFilter = value;
+            }
         }
 
         /// <summary>
         /// Gets or sets the ass version.
         /// </summary>
         /// <value>The ass version.</value>
+        [StringRequireValidatorAttribute("Version should be not empty")]
+        [RegularValidatorAttribute(@"^([\d]+[.][\d]+[.][\d]+([.][\d]+)*)$", "Version input incorrect format")]
         public string AssemblyVersion { get; set; }
-
+       
         #endregion
 
         #region Overrides of ContentBase<Project>
@@ -63,8 +91,10 @@
         /// <returns>IList<Project>.</Project></returns>
         public override IList<Project> HandleScanning()
         {
+            Logger.Debug("HandleScanning...");
             this.SearchSetting.ReferenceAssemblyFilter = this.ReferenceAss;
             var referenceProject = this.referenceAssemblyController.GetItems(this.SearchSetting);
+            Logger.Debug("HandleScanning...DONE");
             return this.BuildReferenceInfos(referenceProject);
         }
 
@@ -75,7 +105,8 @@
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public override bool HandleIncreaseVersion(IList<Project> selectedItems)
         {
-            if (string.IsNullOrEmpty(this.AssemblyVersion) || !selectedItems.Any())
+            Logger.Debug("HandleIncreaseVersion...");
+            if (string.IsNullOrEmpty(this.AssemblyVersion))
             {
                 return false;
             }
@@ -113,7 +144,7 @@
                     }
                 }
             }
-
+            Logger.Debug($"HandleIncreaseVersion...DONE - Update version success for [{results.Count(n => n.HasError == false)}] projects");
             return results.All(rs => rs.HasError);
         }
 
@@ -124,6 +155,8 @@
         /// <returns>ObservableCollection&lt;T&gt;.</returns>
         protected override IList<Project> FilterItemsByText(string text)
         {
+            Logger.Debug("FilterItemsByText...");
+
             if (string.IsNullOrEmpty(text))
             {
                 this.ClearDataSource();
@@ -142,6 +175,8 @@
                 projectDataList.Add(projectFilter);
             }
 
+            Logger.Debug($"FilterItemsByText...Done - Item count = [{projectDataList.Count}]");
+
             return projectDataList;
         }
 
@@ -152,9 +187,12 @@
         /// <returns><c>true</c> if [is change data] [the specified filtering items]; otherwise, <c>false</c>.</returns>
         protected override bool IsChangeData(IList<Project> filteringItems)
         {
+            Logger.Debug("IsChangeData...");
+
             // Diff number of element
             if (filteringItems.Count != this.Items.Count)
             {
+                Logger.Debug($"IsChangeData...DONE - Result=[{true}]");
                 return true;
             }
 
@@ -164,22 +202,24 @@
             if (VSProjectHelper.Equals(listCurItemName, listFilteringItemName))
             {
                 // Verify child items
-                for (int i = 0; i < this.Items.Count; i++)
+                for (var i = 0; i < this.Items.Count; i++)
                 {
                     var filterItems = filteringItems[i].Items.Select(n => n.Name).ToList();
                     var sourceItems = this.Items[i].Items.Select(n => n.Name).ToList();
                     var compareResult = VSProjectHelper.Equals(sourceItems, filterItems);
                     if (!compareResult)
                     {
+                        Logger.Debug($"IsChangeData...DONE - Result=[{true}]");
                         return true;
                     }
                 }
             }
             else // Not equals
             {
+                Logger.Debug($"IsChangeData...DONE - Result=[{true}]");
                 return true;
             }
-
+            Logger.Debug($"IsChangeData...DONE - Result=[{false}]");
             return false;
         }
 
@@ -194,6 +234,8 @@
         /// <returns>IList<Project/>.</returns>
         private List<Project> BuildReferenceInfos(IList<ProjectInfo<ReferAssemblyInfo>> referAssemblyInfos)
         {
+            Logger.Debug("BuildReferenceInfos...");
+
             var results = new List<Project>();
             foreach (var assemblyInfo in referAssemblyInfos)
             {
@@ -203,7 +245,7 @@
                 parentProject.Items.AddRange(lstProjects);
                 results.Add(parentProject);
             }
-            
+            Logger.Debug($"BuildReferenceInfos...DONE - Number project build success = [{results.Count}]");
             return results;
         }
 
